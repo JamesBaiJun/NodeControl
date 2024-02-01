@@ -1,0 +1,87 @@
+﻿<Window x:Class="NodeControl.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NodeControl.Demo"
+        xmlns:ctrl="clr-namespace:NodeControl.Controls;assembly=NodeControl"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="750" Width="1200">
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button Width="80" Height="24" Margin="4 4 4 0" Content="绘制测试" Command="{Binding TestAddCommand}"/>
+            <Button Width="80" Height="24" Margin="4 4 4 0" Content="移除测试" Command="{Binding TestRemoveCommand}"/>
+            <CheckBox Width="80" Margin="4 4 4 0" VerticalContentAlignment="Center" 
+                      VerticalAlignment="Center" Content="动画" Command="{Binding AnimateSetCommand}" CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
+        </StackPanel>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Margin="4" Header="MVVM" ClipToBounds="True">
+                <ctrl:NodeCanvas NodeGroups="{Binding NodeGroups,Mode=TwoWay}" ConnectedDatas="{Binding ConnectedDatas,Mode=TwoWay}">
+                    <ctrl:NodeCanvas.Background>
+                        <VisualBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,8,8">
+                            <VisualBrush.Visual>
+                                <Path Data="M0,8 8,8 8,0" UseLayoutRounding="True" Stroke="#C3E4FF" StrokeThickness="1"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </ctrl:NodeCanvas.Background>
+                </ctrl:NodeCanvas>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Margin="4" Header="XAML" ClipToBounds="True">
+                <ctrl:NodeCanvas>
+                    <ctrl:NodeCanvas.Background>
+                        <VisualBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,8,8">
+                            <VisualBrush.Visual>
+                                <Path Data="M0,8 8,8 8,0" UseLayoutRounding="True" Stroke="#C3E4FF" StrokeThickness="1"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </ctrl:NodeCanvas.Background>
+                    <ctrl:NodeGroup Location="40,80" Header="测试" Width="160">
+                        <ctrl:NodeGroup.NodeItems>
+                            <ctrl:NodeItem Content="节点1"/>
+                            <ctrl:NodeItem NodeType="Output" Content="节点2"/>
+                            <ctrl:NodeItem NodeType="Output" Content="节点3"/>
+                            <ctrl:NodeItem NodeType="Input" Content="节点4"/>
+                            <ctrl:NodeItem NodeType="Input" Content="节点5"/>
+                            <ctrl:NodeItem NodeType="Output" Content="节点6"/>
+                            <ctrl:NodeItem NodeType="Output" Content="节点7"/>
+                        </ctrl:NodeGroup.NodeItems>
+                    </ctrl:NodeGroup>
+
+                    <ctrl:NodeGroup Location="240,140" Header="测试2" Width="140">
+                        <ctrl:NodeGroup.NodeItems>
+                            <ctrl:NodeItem Content="节点1"/>
+                            <ctrl:NodeItem NodeType="Output" Content="节点2"/>
+                            <ctrl:NodeItem NodeType="Output" Content="节点3"/>
+                            <ctrl:NodeItem NodeType="Input" Content="节点4"/>
+                            <ctrl:NodeItem NodeType="Output" Content="节点5"/>
+                            <ctrl:NodeItem NodeType="Output" Content="节点6"/>
+                            <ctrl:NodeItem NodeType="Output" Content="节点7"/>
+                        </ctrl:NodeGroup.NodeItems>
+                    </ctrl:NodeGroup>
+
+                    <ctrl:NodeGroup x:Name="test" Location="400,80" Header="测试" Width="160">
+                        <ctrl:NodeGroup.NodeItems>
+                            <ctrl:NodeItem Content="节点1"/>
+                            <ctrl:NodeItem NodeType="Output" Content="节点2"/>
+                            <ctrl:NodeItem NodeType="Output" Content="节点3"/>
+                            <ctrl:NodeItem NodeType="Input" Content="节点4"/>
+                            <ctrl:NodeItem NodeType="Input" Content="节点5"/>
+                            <ctrl:NodeItem NodeType="Input" Content="节点6"/>
+                        </ctrl:NodeGroup.NodeItems>
+                    </ctrl:NodeGroup>
+                </ctrl:NodeCanvas>
+            </GroupBox>
+        </Grid>
+    </DockPanel>
+</Window>
