@@ -94,6 +94,7 @@ namespace NodeControl.Controls
                 ConnectedData item = e.OldItems[0] as ConnectedData;
                 ConnectedDatas.Remove(item);
                 InternalConnects.Remove(item);
+                RefreshConnector(item);
                 Children.Remove(item.Line);
             }
         }
@@ -196,6 +197,9 @@ namespace NodeControl.Controls
             addLine.MouseRightButtonDown += TempPreviewLine_MouseRightButtonDown;
             SetZIndex(addLine, -1);
             Children.Add(addLine);
+
+            item.StartNode.IsConnected = true;
+            item.EndNode.IsConnected = true;
             InternalConnects.Add(item);
         }
 
@@ -257,7 +261,14 @@ namespace NodeControl.Controls
             var data = ConnectedDatas.FirstOrDefault(x => x.Line == curLine);
             ConnectedDatas.Remove(data);
             InternalConnects.Remove(data);
+            RefreshConnector(data);
             Children.Remove(curLine);
+        }
+
+        private void RefreshConnector(ConnectedData data)
+        {
+            data.StartNode.IsConnected = InternalConnects.FirstOrDefault(x => x.StartNode == data.StartNode || x.EndNode == data.StartNode) != null;
+            data.EndNode.IsConnected = InternalConnects.FirstOrDefault(x => x.StartNode == data.EndNode || x.EndNode == data.EndNode) != null;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

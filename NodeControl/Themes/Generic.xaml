@@ -81,6 +81,10 @@
                             <Setter Property="Visibility" TargetName="RightConnector" Value="Collapsed"/>
                             <Setter Property="DockPanel.Dock" TargetName="Itemcontent" Value="Left"/>
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding IsConnected,RelativeSource={RelativeSource Self}}" Value="True">
+                            <Setter Property="Stroke" TargetName="LeftConnector" Value="#6DC0F4"/>
+                            <Setter Property="Stroke" TargetName="RightConnector" Value="#6DC0F4"/>
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

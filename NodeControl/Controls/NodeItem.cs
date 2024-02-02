@@ -113,6 +113,14 @@ namespace NodeControl.Controls
         public static readonly DependencyProperty ConnectPointProperty =
             DependencyProperty.Register("ConnectPoint", typeof(Point), typeof(NodeItem), new PropertyMetadata(default));
 
+        public bool IsConnected
+        {
+            get { return (bool)GetValue(IsConnectedProperty); }
+            set { SetValue(IsConnectedProperty, value); }
+        }
+        public static readonly DependencyProperty IsConnectedProperty =
+            DependencyProperty.Register("IsConnected", typeof(bool), typeof(NodeItem), new PropertyMetadata(false));
+
 
         public static T GetParent<T>(DependencyObject obj) where T : FrameworkElement
         {

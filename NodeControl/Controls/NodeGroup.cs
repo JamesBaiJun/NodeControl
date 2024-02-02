@@ -117,7 +117,7 @@ namespace NodeControl.Controls
         int zIndex = 0;
         private void HeaderGrid_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Released)
+            if (e.LeftButton == MouseButtonState.Released||!isStartMove)
             {
                 return;
             }
@@ -143,10 +143,13 @@ namespace NodeControl.Controls
         {
             headerGrid.ReleaseMouseCapture();
             Panel.SetZIndex(this, zIndex);
+            isStartMove = false;
         }
 
+        bool isStartMove = false;
         private void HeaderGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            isStartMove = true;
             lastPoint = e.GetPosition(null);
             zIndex = Panel.GetZIndex(this);
         }
