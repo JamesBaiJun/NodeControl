@@ -16,7 +16,7 @@
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button Width="80" Height="24" Margin="4 4 4 0" Content="绘制测试" Command="{Binding TestAddCommand}"/>
             <Button Width="80" Height="24" Margin="4 4 4 0" Content="移除测试" Command="{Binding TestRemoveCommand}"/>
-            <CheckBox Width="80" Margin="4 4 4 0" VerticalContentAlignment="Center" 
+            <CheckBox Width="80" Margin="4 4 4 0" VerticalContentAlignment="Center" IsChecked="{Binding IsAnimated}"
                       VerticalAlignment="Center" Content="动画" Command="{Binding AnimateSetCommand}" CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
         </StackPanel>
 

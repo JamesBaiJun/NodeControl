@@ -10,9 +10,18 @@ using System.Windows;
 
 namespace NodeControl.Demo
 {
-    public class MainViewModel
+    public class MainViewModel : ViewModelBase
     {
         public MainViewModel()
+        {
+            InitData();
+
+            TestAddCommand = new NormalCommand() { ExecuteMethod = TestAdd };
+            TestRemoveCommand = new NormalCommand() { ExecuteMethod = TestRemove };
+            AnimateSetCommand = new NormalCommand<bool>() { ExecuteMethod = AnimateSet };
+        }
+
+        private void InitData()
         {
             NodeGroups = new ObservableCollection<NodeGroup>();
             ConnectedDatas = new ObservableCollection<ConnectedData>();
@@ -84,22 +93,31 @@ namespace NodeControl.Demo
                 EndNode = group3.NodeItems[4]
             });
 
-            TestAddCommand = new NormalCommand() { ExecuteMethod = TestAdd };
-            TestRemoveCommand = new NormalCommand() { ExecuteMethod = TestRemove };
-            AnimateSetCommand = new NormalCommand<bool>() { ExecuteMethod = AnimateSet };
+            ConnectedDatas.Add(new ConnectedData()
+            {
+                StartNode = group2.NodeItems[1],
+                EndNode = group3.NodeItems[2]
+            });
         }
-
 
         public ObservableCollection<NodeGroup> NodeGroups { get; set; }
         public ObservableCollection<ConnectedData> ConnectedDatas { get; set; }
+
         NodeGroup group1;
         NodeGroup group2;
         NodeGroup group3;
 
-
         public NormalCommand TestAddCommand { get; set; }
         public NormalCommand TestRemoveCommand { get; set; }
         public NormalCommand<bool> AnimateSetCommand { get; set; }
+
+        private bool isAnimated;
+
+        public bool IsAnimated
+        {
+            get { return isAnimated; }
+            set { isAnimated = value; RaisePropertyChanged(); }
+        }
 
 
         public void TestAdd()
@@ -107,13 +125,15 @@ namespace NodeControl.Demo
             ConnectedDatas.Add(new ConnectedData()
             {
                 StartNode = group1.NodeItems[1],
-                EndNode = group2.NodeItems[2]
+                EndNode = group2.NodeItems[2],
+                UseAnimation = IsAnimated,
             });
 
             ConnectedDatas.Add(new ConnectedData()
             {
                 StartNode = group1.NodeItems[3],
-                EndNode = group2.NodeItems[4]
+                EndNode = group2.NodeItems[4],
+                UseAnimation = IsAnimated,
             });
         }
 
