@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -71,22 +72,46 @@ namespace NodeControl.Controls
 
         private void Refresh()
         {
-            PathGeometry geo = new PathGeometry();
-            PathFigure pathFigure = new PathFigure();
-            pathFigure.StartPoint = StartPoint;
-            PathSegmentCollection pac = new PathSegmentCollection();
+            //PathGeometry geo = new PathGeometry();
+            //PathFigure pathFigure = new PathFigure();
+            //pathFigure.StartPoint = StartPoint;
+            //PathSegmentCollection pac = new PathSegmentCollection();
 
-            QuadraticBezierSegment quadratic = new QuadraticBezierSegment(GetCentPoint(StartPoint, EndPoint, -1), EndPoint, true);
-            pac.Add(quadratic);
-            pathFigure.Segments = pac;
-            geo.Figures.Add(pathFigure);
-            Data = geo;
+            //QuadraticBezierSegment quadratic = new QuadraticBezierSegment(GetCentPoint(StartPoint, EndPoint, -1), EndPoint, true);
+            //pac.Add(quadratic);
+            //pathFigure.Segments = pac;
+            //geo.Figures.Add(pathFigure);
+            Point controlPoint1 = CalculateControlPoint(StartPoint, EndPoint, true);
+            Point controlPoint2 = CalculateControlPoint(StartPoint, EndPoint, false);
+            
+            Data = DrawBezierCurve(StartPoint, controlPoint1, controlPoint2, EndPoint);
         }
 
         private Point GetCentPoint(Point p1, Point p2, int offset)
         {
             Point point = new Point((p1.X + p2.X) / 2, (p1.Y + p2.Y) / 2);
             return p1.Y > p2.Y ? new Point(point.X, p2.Y) : new Point(point.X, p1.Y);
+        }
+
+        private Point CalculateControlPoint(Point startPoint, Point endPoint, bool isFirstControlPoint)
+        {
+            double distanceX = Math.Abs(endPoint.X - startPoint.X);
+            double controlPointX = (startPoint.X + endPoint.X) / 2;
+            double controlPointY = isFirstControlPoint ? startPoint.Y - distanceX / 10 : endPoint.Y + distanceX / 10;
+            return new Point(controlPointX, controlPointY);
+        }
+
+        private StreamGeometry DrawBezierCurve(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint)
+        {
+            StreamGeometry geometry = new StreamGeometry();
+
+            using (StreamGeometryContext context = geometry.Open())
+            {
+                context.BeginFigure(startPoint, false, false);
+                context.BezierTo(controlPoint1, controlPoint2, endPoint, true, false);
+            }
+
+            return geometry;
         }
     }
 }

@@ -107,7 +107,7 @@
                                      Canvas.Left="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ctrl:NodeConnectLine},Path=EndPoint.X}"
                                      Canvas.Top="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ctrl:NodeConnectLine},Path=EndPoint.Y}"/>
 
-                            <Path Data="{TemplateBinding Data}" StrokeThickness="3">
+                            <Path Data="{TemplateBinding Data}" StrokeThickness="3" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
                                 <Path.Style>
                                     <Style TargetType="Path">
                                         <Setter Property="Stroke" Value="#6DC0F4"/>
