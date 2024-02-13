@@ -31,7 +31,7 @@ namespace NodeControl.Demo
                 Location = new Point(50, 80),
                 Header = "测试组",
             };
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 15; i++)
             {
                 NodeItem item = new NodeItem()
                 {
@@ -45,9 +45,9 @@ namespace NodeControl.Demo
             group2 = new NodeGroup()
             {
                 Header = "测试组",
-                Location = new Point(200, 80),
+                Location = new Point(350, 80),
             };
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 15; i++)
             {
                 NodeItem item = new NodeItem()
                 {
@@ -58,46 +58,17 @@ namespace NodeControl.Demo
             }
             NodeGroups.Add(group2);
 
-            group3 = new NodeGroup()
+            for (int i = 1; i < 15; i+=2)
             {
-                Header = "测试组",
-                Location = new Point(400, 120),
-            };
-            for (int i = 0; i < 5; i++)
-            {
-                NodeItem item = new NodeItem()
+                for (int j = 0; j < 7; j++)
                 {
-                    Content = "node" + i,
-                    NodeType = i % 2 == 0 ? NodeType.Input : NodeType.Output,
-                };
-                group3.NodeItems.Add(item);
+                    ConnectedDatas.Add(new ConnectedData()
+                    {
+                        StartNode = group1.NodeItems[i],
+                        EndNode = group2.NodeItems[2*j]
+                    });
+                }
             }
-            NodeGroups.Add(group3);
-
-            ConnectedDatas.Add(new ConnectedData()
-            {
-                StartNode = group1.NodeItems[1],
-                EndNode = group2.NodeItems[2]
-            });
-
-            ConnectedDatas.Add(new ConnectedData()
-            {
-                StartNode = group1.NodeItems[3],
-                EndNode = group2.NodeItems[4],
-                UseAnimation = true,
-            });
-
-            ConnectedDatas.Add(new ConnectedData()
-            {
-                StartNode = group2.NodeItems[3],
-                EndNode = group3.NodeItems[4]
-            });
-
-            ConnectedDatas.Add(new ConnectedData()
-            {
-                StartNode = group2.NodeItems[1],
-                EndNode = group3.NodeItems[2]
-            });
         }
 
         public ObservableCollection<NodeGroup> NodeGroups { get; set; }
@@ -105,7 +76,6 @@ namespace NodeControl.Demo
 
         NodeGroup group1;
         NodeGroup group2;
-        NodeGroup group3;
 
         public NormalCommand TestAddCommand { get; set; }
         public NormalCommand TestRemoveCommand { get; set; }

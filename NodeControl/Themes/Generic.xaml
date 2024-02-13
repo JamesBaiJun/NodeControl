@@ -5,13 +5,14 @@
     <Style TargetType="{x:Type ctrl:NodeGroup}">
         <Setter Property="Background" Value="#0AABE1" />
         <Setter Property="BorderBrush" Value="#70AAAAAA" />
-        <Setter Property="MinWidth" Value="140" />
+        <Setter Property="MinWidth" Value="160" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ctrl:NodeGroup}">
                     <Border BorderBrush="{TemplateBinding BorderBrush}"
                             Margin="6 0"
+                            Opacity=".9"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid Background="White" >
                             <Grid.RowDefinitions>
